@@ -1,6 +1,25 @@
-﻿namespace ORM_Dapper;
+﻿using System.Data;
+using Dapper;
 
-public class DapperDepartmentRepository
+namespace ORM_Dapper;
+
+public class DapperDepartmentRepository : IDepartmentRepository
 {
-    
+    private readonly IDbConnection _conn;
+
+    public DapperDepartmentRepository(IDbConnection conn)
+    {
+        _conn = conn;
+    }
+
+    public IEnumerable<Department> GetAllDepartments()
+    {
+        return _conn.Query<Department>("SELECT * FROM Departments");
+    }
+
+    public void InsertDepartment(string name)
+    {
+        _conn.Execute("INSERT INTO departments (Name) VALUES (@name)", 
+            new {name});
+    }
 }

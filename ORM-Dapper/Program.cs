@@ -17,10 +17,26 @@ namespace ORM_Dapper
 
             IDbConnection conn = new MySqlConnection(connString);
             
+            var departmentRepo = new DapperDepartmentRepository(conn);
+            
+            departmentRepo.InsertDepartment("Basement Department");
+            
+            var departments = departmentRepo.GetAllDepartments();
+            Console.Clear();
+            foreach (var department in departments)
+            {
+                Console.WriteLine(department.DepartmentID);
+                Console.WriteLine(department.Name);
+                Console.WriteLine();
+                Console.WriteLine();
+            }
             
             
             
-            Console.WriteLine("Hello, World!");
+            
+            
+            
         }
     }
 }
+    
