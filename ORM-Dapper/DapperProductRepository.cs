@@ -11,7 +11,7 @@ public class DapperProductRepository : IProductRepository
     {
         _conn = conn;
     }
-    
+
     public IEnumerable<Product> GetAllProducts()
     {
         return _conn.Query<Product>(@"SELECT * FROM Products");
@@ -19,8 +19,9 @@ public class DapperProductRepository : IProductRepository
 
     public void CreateProduct(string name, decimal price, int categoryId, int onSale, int stockLevel)
     {
-        _conn.Execute(@"INSERT INTO products (Name, Price, CategoryID, OnSale, StockLevel) VALUES (@name, @price, @categoryId, @onSale, @stockLevel);", 
-            new {name, price, categoryId, onSale, stockLevel});
+        _conn.Execute(
+            @"INSERT INTO products (Name, Price, CategoryID, OnSale, StockLevel) VALUES (@name, @price, @categoryId, @onSale, @stockLevel);",
+            new { name, price, categoryId, onSale, stockLevel });
     }
 
 
@@ -34,16 +35,15 @@ public class DapperProductRepository : IProductRepository
                     OnSale = @onSale, 
                     StockLevel = @stockLevel 
                 WHERE 
-                    ProductID = @productID", 
-            new {productId, name, price, categoryId, onSale, stockLevel});
+                    ProductID = @productID",
+            new { productId, name, price, categoryId, onSale, stockLevel });
     }
-    
+
 
     public void DeleteProduct(int productId)
     {
-        _conn.Execute(@"DELETE FROM reviews WHERE ProductID = @productId", new {productId});
-        _conn.Execute(@"DELETE FROM sales WHERE ProductID = @productId", new {productId});
-        _conn.Execute(@"DELETE FROM products WHERE ProductID = @productId", new {productId});
+        _conn.Execute(@"DELETE FROM reviews WHERE ProductID = @productId", new { productId });
+        _conn.Execute(@"DELETE FROM sales WHERE ProductID = @productId", new { productId });
+        _conn.Execute(@"DELETE FROM products WHERE ProductID = @productId", new { productId });
     }
-    
 }

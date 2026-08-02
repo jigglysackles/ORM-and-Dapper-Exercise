@@ -3,5 +3,4 @@
 public interface IDepartmentRepository
 {
     IEnumerable<Department> GetAllDepartments();
-    
 }
